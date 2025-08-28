@@ -1,29 +1,36 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
+
+const portfolioRoutes = require("./routes/Portfolio");
+const adminRoutes = require("./routes/Admin");
 
 const app = express();
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Connexion à mongoDB réussie !'))
-    .catch(() => console.log('Connexion à mongoDB échouée !'));
+    .catch(error => console.error('Connexion à mongoDB échouée :', error));
 
-app.use((req, res, next) => {
-    console.log('Requête reçue');
-    next();
-})
+const allowedOrigins = [
+    "http://localhost:4000",
+    "https://vinipoy.github.io/Portfolio/"
+];
 
-app.use((req, res, next) => {
-    res.status(201);
-    next();
-})
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+    allowedHeaders: "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+}));
 
-app.use((req, res, next) => {
-    res.json({ message: 'Votre requête a bien été reçu' });
-    next();
-});
+app.use(express.json());
 
-app.use((req, res, next) => {
-    console.log('Réponse envoyé avec succès !');
-})
+app.use("/api/portfolio", portfolioRoutes);
+app.use("/api/auth", adminRoutes);
 
 module.exports = app;
