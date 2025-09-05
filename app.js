@@ -25,7 +25,7 @@ app.use(cors({
             callback(null, true);
         } else {
             console.log("CORS blocked origin:", origin);
-            callback(new Error("Not allowed by CORS"));
+            callback(null, false);
         }
     },
     methods: "GET, POST, PUT, DELETE, PATCH, OPTIONS",
