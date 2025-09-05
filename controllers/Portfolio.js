@@ -13,10 +13,27 @@ exports.getOneProject = (req, res, next) => {
 };
 
 exports.createProject = (req, res, next) => {
-    const project = new Portfolio(req.body);
-    project.save()
-        .then(() => res.status(201).json({ message: "Projet ajouté !" }))
-        .catch(error => res.status(400).json({ error }));
+    try {
+        const data = { ...req.body };
+        if (data.skills) {
+            data.skills = JSON.parse(data.skills);
+        }
+        if (data.link) {
+            data.link = JSON.parse(data.link);
+        }
+        if (req.file) {
+            data.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+        }
+        if (!data.category) {
+            return res.status(400).json({ error: "Category is required" });
+        }
+        const project = new Portfolio(data);
+        project.save()
+            .then((savedProject) => res.status(201).json(savedProject))
+            .catch(error => res.status(400).json({ error }));
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 };
 
 exports.updateProject = (req, res, next) => {

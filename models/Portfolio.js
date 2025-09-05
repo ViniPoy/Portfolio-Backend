@@ -8,7 +8,8 @@ const portfolioSchema = new mongoose.Schema({
     link: {
         github: { type: String, default: null },
         site: { type: String, default: null }
-    }
+    },
+    category: { type: String, require: true }
 });
 
 module.exports = mongoose.model("Portfolio", portfolioSchema);
