@@ -16,18 +16,12 @@ const allowedOrigins = [
     "http://localhost:4000",
     "http://localhost:3000",
     "http://127.0.0.1:5500",
-    "https://vinipoy.github.io"
+    "https://vinipoy.github.io",
+    "https://vinipoy.github.io/Portfolio/"
 ];
 
 app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            console.log("CORS blocked origin:", origin);
-            callback(null, false);
-        }
-    },
+    origin: allowedOrigins,
     methods: "GET, POST, PUT, DELETE, PATCH, OPTIONS",
     allowedHeaders: "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
 }));
