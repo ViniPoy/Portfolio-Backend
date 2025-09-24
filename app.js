@@ -19,8 +19,8 @@ const allowedOrigins = [
     "http://localhost:4000",
     "http://localhost:3000",
     "http://127.0.0.1:5500",
-    "https://vinipoy.github.io",
-    "https://vinipoy.github.io/Portfolio/"
+    "https://vl-dev-web.fr",
+    "https://www.vl-dev-web.fr"
 ];
 
 app.use(cors({
