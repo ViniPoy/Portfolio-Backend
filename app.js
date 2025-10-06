@@ -5,6 +5,7 @@ const path = require('path');
 
 const portfolioRoutes = require("./routes/Portfolio");
 const adminRoutes = require("./routes/Admin");
+const contactRoutes = require("./routes/Contact");
 
 const app = express();
 
@@ -40,5 +41,6 @@ app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/portfolio", portfolioRoutes);
 app.use("/api/auth", adminRoutes);
+app.use("/api/contact", contactRoutes);
 
 module.exports = app;
