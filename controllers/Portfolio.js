@@ -24,7 +24,7 @@ exports.createProject = (req, res, next) => {
             data.link = JSON.parse(data.link);
         }
         if (req.file) {
-            data.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+            data.imageUrl = `https://vl-dev-web.fr/images/${req.file.filename}`;
         }
         if (!data.category) {
             return res.status(400).json({ error: "Category is required" });
@@ -55,7 +55,7 @@ exports.updateProject = (req, res, next) => {
                         if (err) console.error("Erreur lors de la suppression de l'ancienne image :", err);
                     });
                 }
-                data.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+                data.imageUrl = `https://vl-dev-web.fr/images/${req.file.filename}`;
             }
             Portfolio.findByIdAndUpdate(req.params.id, data, { new: true })
                 .then(project => res.status(200).json(project))
