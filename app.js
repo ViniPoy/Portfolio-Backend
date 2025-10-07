@@ -36,7 +36,7 @@ app.use(cors({
     allowedHeaders: ["Origin", "X-Requested-With", "Content", "Accept", "Content-Type", "Authorization"]
 }));
 
-app.options("*", cors());
+// app.options("*", cors());
 
 app.use(express.json());
 
