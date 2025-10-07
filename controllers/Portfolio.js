@@ -45,8 +45,20 @@ exports.updateProject = (req, res, next) => {
                 return res.status(404).json({ error: "Projet introuvable !" });
             }
             const data = { ...req.body };
-            if (data.skills) data.skills = JSON.parse(data.skills);
-            if (data.link) data.link = JSON.parse(data.link);
+            if (data.skills) {
+                try { 
+                    data.skills = JSON.parse(data.skills);
+                } catch(e) { 
+                    data.skills = [];
+                }
+            }
+            if (data.link) {
+                try {
+                    data.link = JSON.parse(data.link);
+                } catch(e) { 
+                    data.link = { github: null, site: null }; 
+                }
+            }
             if(req.file) {
                 if (project.imageUrl) {
                     const oldFileName = project.imageUrl.split("/images/")[1];
