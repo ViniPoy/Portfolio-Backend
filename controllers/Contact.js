@@ -16,10 +16,14 @@ exports.sendContactMessage = async (req, res, next) => {
                 user: process.env.MAIL_USER,
                 pass: process.env.MAIL_PASS,
             },
+            tls: { rejectUnauthorized: false },
         });
 
-        await transporter.verify();
-        console.log('Serveur SMTP prêt à envoyer des mails');
+        try {
+            await transporter.verify(); console.log("SMTP OK");
+        } catch(e){
+            console.warn("SMTP verification failed:", e.message);
+        }
 
         await transporter.sendMail({
             from: `"Portfolio VL" <${process.env.MAIL_USER}>`,
