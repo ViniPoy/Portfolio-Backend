@@ -61,7 +61,7 @@ exports.updateProject = (req, res, next) => {
             }
             if(req.file) {
                 if (project.imageUrl) {
-                    const oldFileName = project.imageUrl.split("/images/")[1];
+                    const oldFileName = project.imageUrl.split("/backend-images/")[1];
                     const oldFilePath = path.join(__dirname, "../images/", oldFileName);
                     fs.unlink(oldFilePath, err => {
                         if (err) console.error("Erreur lors de la suppression de l'ancienne image :", err);
@@ -82,7 +82,7 @@ exports.deleteProject = (req, res, next) => {
             if (!project) {
                 return res.status(404).json({ error: "Projet introuvable !" })
             }
-            const filename = project.imageUrl.split("/images/")[1];
+            const filename = project.imageUrl.split("/backend-images/")[1];
             const filePath = path.join(__dirname, "../images/", filename);
             fs.unlink(filePath, (err) => {
                 if (err) {
