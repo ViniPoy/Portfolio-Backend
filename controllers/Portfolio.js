@@ -71,9 +71,16 @@ exports.updateProject = (req, res, next) => {
                 }
                 data.imageUrl = `https://vl-dev-web.fr/backend-images/${req.file.filename}`;
             }
+            console.log("Data prête pour update :", data);
             Portfolio.findByIdAndUpdate(req.params.id, data, { new: true })
-                .then(project => res.status(200).json(project))
-                .catch(error => res.status(400).json({ error }));
+                .then(project => {
+                    console.log("Project updated:", project);
+                    res.status(200).json(project);
+                })
+                .catch(error => {
+                    console.error("Erreur lors de l'update :", error);
+                    res.status(400).json({ error });
+                });
         })
         .catch(error => res.status(500).json({ error }));
 };
