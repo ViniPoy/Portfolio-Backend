@@ -39,6 +39,8 @@ exports.createProject = (req, res, next) => {
 };
 
 exports.updateProject = (req, res, next) => {
+    console.log("req.file :", req.file);
+    console.log("req.body :", req.body);
     Portfolio.findById(req.params.id)
         .then(project => {
             if (!project) {
